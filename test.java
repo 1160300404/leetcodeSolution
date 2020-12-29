@@ -1,10 +1,7 @@
 package Solution;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
 
 public class test {
     public int maximalRectangle(char[][] matrix) {
@@ -43,38 +40,65 @@ public class test {
         System.out.println(max);
         return max;
     }
-
-    public boolean exist(char[][] board, String word) {
-        int m=board.length;
-        if(m<1)
-            return word.length()==0?true:false;
-        int n=board[0].length;
-        if(n<1)
-            return word.length()==0?true:false;
-        boolean ans=false;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                ans=ans||dfs(board,word,i,j,0,m,n);
+    public boolean isValid (String s) {
+        // write code here
+        Stack<Character> stack=new Stack<>();
+        Queue<Character> queue=new LinkedList<>();
+        HashMap<Character,Character> map=new HashMap<>();
+        map.put('(',')');
+        map.put('[',']');
+        map.put('{','}');
+        char[] array=s.toCharArray();
+        for(int i=0;i<array.length;i++){
+            if(array[i]=='('||array[i]=='['||array[i]=='{'){
+                stack.push(array[i]);
+            }else if(!stack.isEmpty()&&array[i]==map.get(stack.peek())){
+                stack.pop();
+            }else{
+                System.out.println(array[i]);
+                return false;
+            }
+        }
+        if(stack.isEmpty())
+            return true;
+        else
+            return false;
+    }
+    public ArrayList<String> generateParenthesis (int n) {
+        // write code here
+        int left=n,right=n;
+        return dfs(left,right);
+    }
+    public ArrayList<String> dfs(int left,int right){
+        ArrayList<String> ans=new ArrayList<String>();
+        if(left==0){
+            String str="";
+            for(int i=0;i<right;i++)
+                str+=")";
+            ans.add(str+"");
+            return ans;
+        }
+        ArrayList<String> tmp=dfs(left-1,right);
+        for(int i=0;i<tmp.size();i++){
+            ans.add("("+tmp.get(i));
+        }
+        if(right-left>0){
+            tmp=dfs(left,right-1);
+            for(int j=0;j<tmp.size();j++){
+                String str=")";
+                if((str+tmp.get(j)).equals("(())()")){
+                    System.out.println(left);
+                    System.out.println(right);
+                }
+                System.out.println((str+tmp.get(j)));
+                ans.add(str+tmp.get(j));
             }
         }
         return ans;
     }
-    public boolean dfs(char[][] board,String word,int i,int j,int cnt,int m, int n){
-        if(i<0||i>m||j<0||j>n||board[i][j]!=word.charAt(cnt))
-            return false;
-        else{
-            char tmp=board[i][j];
-            board[i][j]='0';
-            boolean ans=dfs(board,word,i-1,j,cnt+1,m,n)||dfs(board,word,i,j-1,cnt+1,m,n);
-            ans=ans||dfs(board,word,i+1,j,cnt+1,m,n)||dfs(board,word,i,j+1,cnt+1,m,n);
-            board[i][j]=tmp;
-            return ans;
-        }
-    }
-
     public static void main(String[] args) {
-        char a='a'+5+6;
-        System.out.println(a);
+        test s=new test();
+        System.out.println(s.generateParenthesis(4));
     }
 
 }
