@@ -64,41 +64,41 @@ public class test {
         else
             return false;
     }
-    public ArrayList<String> generateParenthesis (int n) {
+    public int[] searchRange (int[] A, int target) {
         // write code here
-        int left=n,right=n;
-        return dfs(left,right);
-    }
-    public ArrayList<String> dfs(int left,int right){
-        ArrayList<String> ans=new ArrayList<String>();
-        if(left==0){
-            String str="";
-            for(int i=0;i<right;i++)
-                str+=")";
-            ans.add(str+"");
-            return ans;
-        }
-        ArrayList<String> tmp=dfs(left-1,right);
-        for(int i=0;i<tmp.size();i++){
-            ans.add("("+tmp.get(i));
-        }
-        if(right-left>0){
-            tmp=dfs(left,right-1);
-            for(int j=0;j<tmp.size();j++){
-                String str=")";
-                if((str+tmp.get(j)).equals("(())()")){
-                    System.out.println(left);
-                    System.out.println(right);
-                }
-                System.out.println((str+tmp.get(j)));
-                ans.add(str+tmp.get(j));
-            }
-        }
+        int end=A.length-1;
+        int[] ans=new int[2];
+        ans[0]=-1;
+        ans[1]=-1;
+        dfs(A,0,end,target,ans);
         return ans;
+    }
+    public void dfs(int[] A,int start,int end,int target,int[] ans){
+        if(start>end)
+            return;
+        int mid=(start+end)/2;
+
+        if(A[mid]==target){
+            System.out.println(mid);
+            if(ans[0]==-1){
+                Arrays.fill(ans,mid);
+
+            }else if(ans[0]>mid)
+                ans[0]=mid;
+            else if(ans[1]<mid)
+                ans[1]=mid;
+            dfs(A,start,mid-1,target,ans);
+            dfs(A,mid+1,end,target,ans);
+        }
+        else if(A[mid]>target)
+            dfs(A,start,mid-1,target,ans);
+        else
+            dfs(A,mid+1,end,target,ans);
     }
     public static void main(String[] args) {
         test s=new test();
-        System.out.println(s.generateParenthesis(4));
+
+        System.out.println(s.searchRange(new int[]{0,0,0,0,0,0,1,1,2,2,3,3,4,4,4},0));
     }
 
 }
