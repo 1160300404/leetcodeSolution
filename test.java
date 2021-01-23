@@ -96,9 +96,10 @@ public class test {
             dfs(A,mid+1,end,target,ans);
     }
     public static void main(String[] args) {
-        test s=new test();
-
-        System.out.println(s.searchRange(new int[]{0,0,0,0,0,0,1,1,2,2,3,3,4,4,4},0));
+//        test s=new test();
+//
+//        System.out.println(s.searchRange(new int[]{0,0,0,0,0,0,1,1,2,2,3,3,4,4,4},0));
+        System.out.println('0'*10);
     }
 
 }

@@ -44,6 +44,7 @@ class DisjointSetUnion {
         if (fx == fy) {
             return;
         }
+
         if (rank[fx] < rank[fy]) {
             int temp = fx;
             fx = fy;
