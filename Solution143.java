@@ -1,5 +1,3 @@
-package Solution;
-
 public class Solution143 {
     public void reorderList(ListNode head) {
         if(head==null||head.next==null){
@@ -29,4 +27,12 @@ public class Solution143 {
             fast=tmp;
         }
     }
+}
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
 }
